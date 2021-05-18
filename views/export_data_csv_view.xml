@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <data>
+
+    <!-- 
+    =====================================================
+    Export data lines
+    =====================================================
+    -->  
+        <record id="view_export_data_csv_line_tree" model="ir.ui.view">
+            <field name="name">export.data.csv.line.tree</field>
+            <field name="model">export.data.csv.line</field>
+            <field name="arch" type="xml">
+                <tree string="Export Data Lines">
+                    <field name="name"/>
+                    <field name="last_id"/>
+                    <field name="record_count"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="view_export_data_csv_line_form" model="ir.ui.view">
+            <field name="name">export.data.csv.line.form</field>
+            <field name="model">export.data.csv.line</field>
+            <field name="arch" type="xml">
+                <form string="Export Data Lines">
+                    <notebook>
+                        <page string="Invoices">
+                            <group colspan="4">
+                                <field name="name"/>
+                                <field name="last_id"/>
+                                <field name="record_count"/>
+                                <field name="csv_file_id"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+    <!-- 
+    =====================================================
+    Export Data Entries
+    =====================================================
+    -->
+
+        <record id="view_export_data_csv_tree" model="ir.ui.view">
+            <field name="name">export.data.csv.tree</field>
+            <field name="model">export.data.csv</field>
+            <field name="arch" type="xml">
+                <tree string="Export Data Entries">
+                    <field name="date_start"/>
+                    <field name="name"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_export_data_csv_form" model="ir.ui.view">
+            <field name="name">export.data.csv.form</field>
+            <field name="model">export.data.csv</field>
+            <field name="arch" type="xml">
+                <form string="Export Data Entry">
+                    <header>
+                        <!-- Confirmed -->
+                        <button name="action_generate_csv" string="Grenerate CSV"
+                                states="draft" type="object"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,in_progress,done,cancel"/>
+                    </header>
+                    <group>
+                        <field name="name" attrs="{'readonly': [('state','=','done')]}"/>
+                        <field name="date_start" attrs="{'readonly': [('state','=','done')]}"/>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Lines">
+                            <field colspan="4" name="line_ids" nolabel="1" widget="one2many_list" mode="tree" attrs="{'readonly': [('state', 'in', ('done','cancel'))]}">
+                                <tree string="Lines">
+                                    <field name="name"/>
+                                    <field name="last_id"/>
+                                    <field name="record_count"/>
+                                    <field name="csv_file_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_export_data_csv_filter" model="ir.ui.view">
+            <field name="name">export.data.csv.search</field>
+            <field name="model">export.data.csv</field>
+            <field name="arch" type="xml">
+                <search string="Search Export Data">
+                    <field name="name"/>
+                    <separator/>
+               </search>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="action_export_data_csv">
+            <field name="name">Export data</field>
+            <field name="res_model">export.data.csv</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_export_data_csv_filter"/>
+            <field name="help">With this option you can create and manage the export data incsv file</field>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="action_export_data_csv_tree">
+            <field name="sequence" eval="10"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_export_data_csv_tree"/> 
+            <field name="act_window_id" ref="action_export_data_csv"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="action_export_data_csv_form">
+            <field name="sequence" eval="20"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_export_data_csv_form"/>
+            <field name="act_window_id" ref="action_export_data_csv"/>
+        </record>
+
+        <menuitem name="Export Data" id="export_data_menu_root" groups="base.group_user"
+                  web_icon="export_data_csv,static/description/icono.png"/>
+
+        <menuitem name="Export" id="export_data_menu_1" parent="export_data_menu_root"/>
+        <menuitem name="Configuration" id="export_config_menu_1" parent="export_data_menu_root"/>
+
+        <menuitem name="Export data " id="menu_action_export_data_csv" parent="export_data_menu_1" action="action_export_data_csv"/>
+
+    </data>
+</odoo>

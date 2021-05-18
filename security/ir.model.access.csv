@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+"access_export_data_user","export.data.user" ,"model_export_data_csv","mh_export_data.group_export_data_user",1,0,0,0
+"access_export_data_line_user","export.data.line.user","model_export_data_csv_line","mh_export_data.group_export_data_user",1,0,0,0
+"access_export_data_line_manager","export.data.line.manager","model_export_data_csv_line","mh_export_data.group_export_data_manager",1,1,1,1
+"access_export_data_manager","export.data.manager","model_export_data_csv","mh_export_data.group_export_data_manager",1,1,1,1
+"access_export_module_line_user","export.data.module.user","model_export_module_line","mh_export_data.group_export_data_user",1,0,0,0
+"access_export_module_line_manager","export.data.module.manager","model_export_module_line","mh_export_data.group_export_data_manager",1,1,1,1
